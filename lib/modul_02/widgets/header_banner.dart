@@ -1,75 +1,140 @@
 import 'package:flutter/material.dart';
+import '../models/course.dart';
 
-// Banner header profil mahasiswa di bagian atas dashboard
 class HeaderBanner extends StatelessWidget {
-  final String studentName;
-  final String nim;
+  final List<Course> courses;
 
   const HeaderBanner({
     super.key,
-    this.studentName = 'Mahasiswa TRPL',
-    this.nim = '362355401xxx',
+    required this.courses,
   });
 
   @override
   Widget build(BuildContext context) {
+    final totalSKS = courses.fold<int>(
+      0,
+      (total, course) => total + course.sks,
+    );
+
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.all(26),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFF0284C7), Color(0xFF0369A1)],
+          colors: [
+            Color(0xFF087DB5),
+            Color(0xFF0878AD),
+          ],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0284C7).withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            color: Colors.black.withValues(alpha: 0.12),
+            blurRadius: 14,
+            offset: const Offset(0, 7),
           ),
         ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // =====================================================
+          // SEMESTER + NOTIFIKASI
+          // =====================================================
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Text(
-                  'Semester 5 (2026/2027)',
-                  style: TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w600),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 7,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withValues(alpha: 0.16),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Text(
+                    'Semester 5 (2026/2027)',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
-              const Icon(Icons.notifications_active_outlined, color: Colors.white, size: 20),
+
+              const SizedBox(width: 12),
+
+              const Icon(
+                Icons.notifications_none_rounded,
+                color: Colors.white,
+                size: 27,
+              ),
             ],
           ),
-          const SizedBox(height: 14),
+
+          const SizedBox(height: 22),
+
+          // =====================================================
+          // NAMA MAHASISWA
+          // =====================================================
           Text(
-            'Selamat Datang, $studentName ($nim)',
-            style: const TextStyle(color: Colors.white70, fontSize: 13),
+            'Selamat Datang, Elga Maulidia Akbari (362558302130)',
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.white.withValues(alpha: 0.82),
+              fontSize: 15,
+              height: 1.3,
+            ),
           ),
-          const SizedBox(height: 4),
+
+          const SizedBox(height: 8),
+
+          // =====================================================
+          // JUDUL
+          // =====================================================
           const Text(
             'Dashboard Akademik & Proyek',
-            style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 25,
+              height: 1.2,
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          const SizedBox(height: 16),
-          // Wrap mencegah overflow pada layar sempit atau font besar.
-          const Wrap(
+
+          const SizedBox(height: 24),
+
+          // =====================================================
+          // STATISTIK
+          // =====================================================
+          Wrap(
             spacing: 8,
             runSpacing: 8,
             children: [
-              _StatPill(icon: Icons.task_alt, label: '4 Matakuliah'),
-              _StatPill(icon: Icons.grade, label: 'IPK 3.85'),
-              _StatPill(icon: Icons.calendar_month, label: '100% Hadir'),
+              _StatChip(
+                icon: Icons.school_rounded,
+                text: '$totalSKS SKS',
+              ),
+
+              const _StatChip(
+                icon: Icons.star_rounded,
+                text: 'IPK 3.85',
+              ),
+
+              const _StatChip(
+                icon: Icons.calendar_month_rounded,
+                text: '100% Hadir',
+              ),
             ],
           ),
         ],
@@ -78,27 +143,49 @@ class HeaderBanner extends StatelessWidget {
   }
 }
 
-// Widget kecil untuk menampilkan pill status (ikon + label)
-class _StatPill extends StatelessWidget {
-  final IconData icon;
-  final String label;
+// =============================================================
+// STAT CHIP
+// =============================================================
 
-  const _StatPill({required this.icon, required this.label});
+class _StatChip extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const _StatChip({
+    required this.icon,
+    required this.text,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 13,
+        vertical: 9,
+      ),
       decoration: BoxDecoration(
-        color: Colors.black.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(10),
+        color: Colors.black.withValues(alpha: 0.15),
+        borderRadius: BorderRadius.circular(18),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 14, color: Colors.white),
-          const SizedBox(width: 4),
-          Text(label, style: const TextStyle(color: Colors.white, fontSize: 11, fontWeight: FontWeight.w500)),
+          Icon(
+            icon,
+            color: Colors.white,
+            size: 17,
+          ),
+
+          const SizedBox(width: 6),
+
+          Text(
+            text,
+            style: const TextStyle(
+              color: Colors.white,
+              fontSize: 13,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
         ],
       ),
     );
