@@ -2,7 +2,7 @@
 
 - **Nama**: Elga Maulidia Akbari
 - **NIM**: 36255830210
-- **Kelas / Prodi**: 3E / Sarjana Terapan TRPL
+- **Kelas / Prodi**: 2E / Sarjana Terapan TRPL
 - **Mata Kuliah**: Pemrograman Perangkat Bergerak (Semester 3)
 
 ---

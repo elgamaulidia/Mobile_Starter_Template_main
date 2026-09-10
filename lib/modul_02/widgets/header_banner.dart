@@ -25,7 +25,7 @@ class HeaderBanner extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: const Color(0xFF0284C7).withValues(alpha:0.3),
+            color: const Color(0xFF0284C7).withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -62,13 +62,13 @@ class HeaderBanner extends StatelessWidget {
             style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 16),
-          // Ringkasan status akademik
-          const Row(
+          // Wrap mencegah overflow pada layar sempit atau font besar.
+          const Wrap(
+            spacing: 8,
+            runSpacing: 8,
             children: [
               _StatPill(icon: Icons.task_alt, label: '4 Matakuliah'),
-              SizedBox(width: 8),
               _StatPill(icon: Icons.grade, label: 'IPK 3.85'),
-              SizedBox(width: 8),
               _StatPill(icon: Icons.calendar_month, label: '100% Hadir'),
             ],
           ),
