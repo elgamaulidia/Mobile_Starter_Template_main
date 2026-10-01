@@ -93,3 +93,80 @@ Sesuai prinsip **Responsible AI** di lingkungan akademik Politeknik Negeri Banyu
 ---
 
 *Hak Cipta © 2026 Jurusan Bisnis dan Informatika (JBI), Politeknik Negeri Banyuwangi.*
+
+---
+
+---
+
+# LAPORAN PRAKTIKUM MODUL 04
+
+## Future & REST API Dasar
+
+**Nama:** Elga Maulidia Akbari 
+**NIM:** 362558302130
+**Kelas:** TRPL 2E  
+**Program Studi:** Sarjana Terapan Teknologi Rekayasa Perangkat Lunak (TRPL)
+
+---
+
+## 1. Hasil Praktikum
+
+Pada Modul 04 dibuat aplikasi **Portal Pengumuman TRPL** menggunakan Flutter. Aplikasi mengambil data pengumuman dari REST API dan menampilkannya dalam bentuk daftar.
+
+Aplikasi memiliki beberapa fitur, yaitu:
+
+- Mengambil data pengumuman dari REST API.
+- Menampilkan 10 data pengumuman.
+- Melakukan filter berdasarkan kategori.
+- Menampilkan detail pengumuman.
+- Menangani kondisi loading, error, data kosong, dan data berhasil.
+- Memuat ulang data menggunakan tombol refresh dan pull-to-refresh.
+
+---
+
+## 2. SS Modul 04
+
+### A. Loading State
+
+Pada keadaan loading, aplikasi sedang melakukan proses pengambilan data dari REST API. Selama proses tersebut berlangsung, aplikasi menampilkan indikator loading dan pesan **"Memuat pengumuman dari server..."**.
+
+[![Loading State](./lib/modul_04/screenshots/Loading%20State.png)](./lib/modul_04/screenshots/Loading%20State.png)
+
+### B. Error State
+
+Pada keadaan error, aplikasi menampilkan **"Gagal Memuat Data"** ketika terjadi masalah saat mengambil data dari server. Aplikasi juga menyediakan tombol **"Coba Lagi"** untuk melakukan request kembali.
+
+[![Error State](./lib/modul_04/screenshots/Error%20State.png)](./lib/modul_04/screenshots/Error%20State.png)
+
+### C. Empty State
+
+Pada keadaan empty, aplikasi menampilkan kondisi ketika tidak terdapat pengumuman pada kategori yang dipilih. Aplikasi menampilkan ikon data kosong beserta keterangan kepada pengguna.
+
+[![Empty State](./lib/modul_04/screenshots/Empty%20State.png)](./lib/modul_04/screenshots/Empty%20State.png)
+
+### D. Success State
+
+Pada keadaan success, data berhasil diterima dari REST API dan ditampilkan dalam bentuk daftar. Pada pengujian ini aplikasi berhasil menampilkan **10 pengumuman**.
+
+[![Success State](./lib/modul_04/screenshots/Success%20State.png)](./lib/modul_04/screenshots/Success%20State.png)
+
+### E. Detail Pengumuman
+
+Pengguna dapat memilih salah satu pengumuman pada daftar untuk membuka halaman detail. Halaman detail menampilkan informasi dari pengumuman yang dipilih.
+
+[![Detail Pengumuman](./lib/modul_04/screenshots/Detail%20Pengumuman.png)](./lib/modul_04/screenshots/Detail%20Pengumuman.png)
+
+---
+
+## 3. Pengujian
+
+Pengujian yang dilakukan pada Modul 04:
+
+- `flutter analyze` → **No issues found**
+- `flutter test test/modul_04_test.dart` → **All tests passed**
+
+---
+
+## 4. Kesimpulan
+
+Praktikum Modul 04 berhasil dilakukan. Aplikasi dapat mengambil data dari REST API dan menampilkannya dalam bentuk daftar pengumuman. Aplikasi juga dapat melakukan filter kategori, menampilkan detail pengumuman, melakukan refresh data, serta menangani kondisi loading, error, empty, dan success.
