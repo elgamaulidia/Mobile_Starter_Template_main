@@ -3,41 +3,65 @@ import '../datasources/announcement_remote_datasource.dart';
 import '../models/announcement.dart';
 import 'announcement_repository.dart';
 
-// Implementasi Repository: Mengoordinasikan data remote dan menangani exception jaringan
+// Implementasi Repository: mengoordinasikan data remote
+// dan menangani exception jaringan.
 class AnnouncementRepositoryImpl implements AnnouncementRepository {
   final AnnouncementRemoteDataSource _remoteDataSource;
 
-  AnnouncementRepositoryImpl({AnnouncementRemoteDataSource? remoteDataSource})
-      : _remoteDataSource = remoteDataSource ?? AnnouncementRemoteDataSource();
+  AnnouncementRepositoryImpl({
+    AnnouncementRemoteDataSource? remoteDataSource,
+  }) : _remoteDataSource =
+            remoteDataSource ?? AnnouncementRemoteDataSource();
 
   @override
-  Future<List<Announcement>> getAnnouncements({String? category}) async {
+  Future<List<Announcement>> getAnnouncements({
+    String? category,
+  }) async {
     try {
+      // Mengambil data dari REST API.
       final list = await _remoteDataSource.fetchAnnouncements();
 
+      // Jika memilih Semua, tampilkan seluruh data.
       if (category == null || category == 'Semua') {
         return list;
       }
 
-      return list.where((item) => item.category.toLowerCase() == category.toLowerCase()).toList();
+      // Filter berdasarkan kategori yang dipilih.
+      return list
+          .where(
+            (item) =>
+                item.category.toLowerCase() ==
+                category.toLowerCase(),
+          )
+          .toList();
     } on DioException catch (e) {
-      // Menerjemahkan DioException ke pesan error yang mudah dipahami mahasiswa
+      // Menerjemahkan DioException menjadi pesan
+      // yang mudah dipahami.
       String errorMessage;
+
       switch (e.type) {
         case DioExceptionType.connectionTimeout:
         case DioExceptionType.sendTimeout:
         case DioExceptionType.receiveTimeout:
-          errorMessage = 'Koneksi ke server timeout. Periksa sambungan internet Anda.';
+          errorMessage =
+              'Koneksi ke server timeout. Periksa sambungan internet Anda.';
           break;
+
         case DioExceptionType.connectionError:
-          errorMessage = 'Gagal terhubung ke server. Periksa koneksi data atau Wi-Fi Anda.';
+          errorMessage =
+              'Gagal terhubung ke server. Periksa koneksi data atau Wi-Fi Anda.';
           break;
+
         case DioExceptionType.badResponse:
-          errorMessage = 'Server merespons dengan kesalahan (${e.response?.statusCode}).';
+          errorMessage =
+              'Server merespons dengan kesalahan (${e.response?.statusCode}).';
           break;
+
         default:
-          errorMessage = 'Terjadi kendala jaringan: ${e.message ?? 'Kesalahan tidak diketahui'}';
+          errorMessage =
+              'Terjadi kendala jaringan: ${e.message ?? 'Kesalahan tidak diketahui'}';
       }
+
       throw Exception(errorMessage);
     } catch (e) {
       throw Exception('Gagal memuat pengumuman: $e');
@@ -45,11 +69,17 @@ class AnnouncementRepositoryImpl implements AnnouncementRepository {
   }
 
   @override
-  Future<Announcement> addAnnouncement(Announcement announcement) async {
+  Future<Announcement> addAnnouncement(
+    Announcement announcement,
+  ) async {
     try {
-      return await _remoteDataSource.createAnnouncement(announcement);
+      return await _remoteDataSource.createAnnouncement(
+        announcement,
+      );
     } on DioException catch (e) {
-      throw Exception('Gagal mengirim pengumuman: ${e.message}');
+      throw Exception(
+        'Gagal mengirim pengumuman: ${e.message}',
+      );
     }
   }
 }

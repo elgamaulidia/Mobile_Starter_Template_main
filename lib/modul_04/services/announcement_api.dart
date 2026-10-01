@@ -1,0 +1,93 @@
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
+import '../models/announcement.dart';
+
+class AnnouncementApi {
+  static const String baseUrl =
+      'https://jsonplaceholder.typicode.com';
+
+  static const Duration batasWaktu =
+      Duration(seconds: 10);
+
+  final http.Client _client;
+  final bool _milikSendiri;
+
+  AnnouncementApi({http.Client? client})
+      : _client = client ?? http.Client(),
+        _milikSendiri = client == null;
+
+  Future<List<Announcement>> ambilPengumuman() async {
+    final http.Response response;
+
+    try {
+      response = await _client
+          .get(
+            Uri.parse('$baseUrl/posts?_limit=10'),
+          )
+          .timeout(batasWaktu);
+    } on TimeoutException {
+      throw Exception(
+        'Koneksi ke server timeout. Periksa sambungan internet Anda.',
+      );
+    } on http.ClientException {
+      throw Exception(
+        'Gagal terhubung ke server. Periksa koneksi data atau Wi-Fi Anda.',
+      );
+    }
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        'Server merespons dengan status ${response.statusCode}.',
+      );
+    }
+
+    final List<dynamic> baris;
+
+    try {
+      baris = jsonDecode(response.body) as List<dynamic>;
+    } on FormatException {
+      throw Exception(
+        'Respons server bukan JSON yang valid.',
+      );
+    }
+
+    const List<String> daftarKategori = [
+      'Akademik',
+      'Beasiswa',
+      'Kegiatan',
+      'Prestasi',
+    ];
+
+    return List<Announcement>.generate(
+      baris.length,
+      (int i) {
+        final Map<String, dynamic> mentah =
+            baris[i] as Map<String, dynamic>;
+
+        return Announcement.fromJson(
+          <String, dynamic>{
+            'id': mentah['id'],
+            'title': mentah['title'],
+            'content': mentah['body'],
+            'author': 'Bagian Akademik Poliwangi',
+            'category':
+                daftarKategori[i % daftarKategori.length],
+            'date':
+                '2026-09-${(i % 28 + 1).toString().padLeft(2, '0')}',
+            'readCount': (i + 1) * 37,
+          },
+        );
+      },
+      growable: false,
+    );
+  }
+
+  void tutup() {
+    if (_milikSendiri) {
+      _client.close();
+    }
+  }
+}
