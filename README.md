@@ -1,172 +1,112 @@
-# Starter Template & Laporan Praktikum Pemrograman Mobile
-### Program Studi Sarjana Terapan Teknologi Rekayasa Perangkat Lunak (TRPL)
-**Politeknik Negeri Banyuwangi — Semester Ganjil 2026**
+# Laporan Praktikum Modul 06: Login & Pengelolaan Sesi Aplikasi
 
-Panduan interaktif lengkap: [Portal Codelabs TRPL Poliwangi](https://codelabs-poliwangi.github.io/MobileDev-Codelabs/)
+- **Nama:** Elga Maulidia Akbari
+- **NIM:** 362558302130
+- **Kelas / Prodi:** 2E TRPL
+- **Mata Kuliah:** Pemrograman Perangkat Bergerak (Semester 3)
 
 ---
 
-## 1. Identitas Mahasiswa
+## 1. Ringkasan Implementasi
 
-> [!IMPORTANT]
-> **Wajib Mengganti Data di Bawah Ini!**  
-> Autograding CI/CD akan memeriksa apakah nilai *placeholder* di bawah ini telah diganti dengan Nama dan NIM Anda yang sebenarnya. Jika belum diganti, pengujian `verify_documentation_test.dart` akan gagal.
+Pada praktikum Modul 06 ini, saya membuat fitur login dan mencoba beberapa cara untuk menyimpan sesi pengguna di aplikasi Flutter.
 
-| Informasi | Data Mahasiswa |
+Langkah-langkah yang saya kerjakan:
+
+1. **Form Login dan Validasi (Fase A)**
+   - Membuat tampilan login dengan tombol Isi Akun Demo.
+   - Menambahkan validasi format email.
+   - Menangani pesan kesalahan ketika akun terkunci atau server mengalami gangguan.
+   - Menampilkan halaman beranda setelah login berhasil.
+
+2. **Percobaan Penyimpanan Sesi (Fase B)**
+   - **In-Memory:** Menyimpan sesi sementara di memori aplikasi.
+   - **SharedPreferences (Prefs):** Menyimpan data sesi secara lokal.
+   - **Penyimpanan Aman:** Mencoba penyimpanan sesi aman sesuai dukungan platform.
+   - **Diagnostik Token:** Memeriksa status penyimpanan sesi dan token sesuai kemampuan aplikasi.
+
+## 2. Bukti Tangkapan Layar (Running App)
+
+### A. Alur Login dan Penanganan Error (Fase A)
+
+| 1A. Form Login Kosong | 2A. Menggunakan Akun Demo |
 |---|---|
-| **Nama Lengkap** | Mahasiswa TRPL Poliwangi *(Ganti dengan Nama Lengkap Anda)* |
-| **NIM** | 362458302000 *(Ganti dengan NIM Asli Anda)* |
-| **Kelas / Angkatan** | TRPL 5A / 2024 |
-| **Dosen Pengampu** | Sepyan Purnama Kristanto, M.Kom. |
+| [![Form Login Kosong](./screenshots/modul_06/Bagian3A.png)](./screenshots/modul_06/Bagian3A.png) | [![Akun Demo](./screenshots/modul_06/Bagian1A.png)](./screenshots/modul_06/Bagian1A.png) |
+
+| 3A. Format Email Salah | 4A. Pesan Akun Terkunci |
+|---|---|
+| [![Format Email Salah](./screenshots/modul_06/Bagian4A.png)](./screenshots/modul_06/Bagian4A.png) | [![Akun Terkunci](./screenshots/modul_06/Bagian5A.png)](./screenshots/modul_06/Bagian5A.png) |
+
+| 5A. Gangguan Server | 6A. Beranda Setelah Login |
+|---|---|
+| [![Gangguan Server](./screenshots/modul_06/Bagian6A.png)](./screenshots/modul_06/Bagian6A.png) | [![Beranda Login](./screenshots/modul_06/Bagian2A.png)](./screenshots/modul_06/Bagian2A.png) |
+
+### B. Percobaan Penyimpanan Sesi dan Diagnostik (Fase B)
+
+#### 1. Penyimpanan Memori (In-Memory)
+
+| 1B. Halaman Login Pengayaan | 2B. Beranda dengan Token Tersembunyi |
+|---|---|
+| [![Login Pengayaan](./screenshots/modul_06/1B.png)](./screenshots/modul_06/1B.png) | [![Token Tersembunyi](./screenshots/modul_06/2B.png)](./screenshots/modul_06/2B.png) |
+
+| 3B. Beranda dengan Token Ditampilkan | 4B. Diagnostik Penyimpanan Memori |
+|---|---|
+| [![Token Ditampilkan](./screenshots/modul_06/3B.png)](./screenshots/modul_06/3B.png) | [![Diagnostik Memori](./screenshots/modul_06/4B.png)](./screenshots/modul_06/4B.png) |
+
+#### 2. Penyimpanan Preferences (SharedPreferences)
+
+| 5B. Beranda Sesi Prefs | 6B. Diagnostik Penyimpanan Prefs |
+|---|---|
+| [![Beranda Prefs](./screenshots/modul_06/5B.png)](./screenshots/modul_06/5B.png) | [![Diagnostik Prefs](./screenshots/modul_06/6B.png)](./screenshots/modul_06/6B.png) |
+
+#### 3. Penyimpanan Aman (Secure Storage)
+
+| 7B. Beranda Sesi Aman | 8B. Diagnostik Secure Storage |
+|---|---|
+| [![Beranda Secure Storage](./screenshots/modul_06/7B.png)](./screenshots/modul_06/7B.png) | [![Diagnostik Secure Storage](./screenshots/modul_06/8B.png)](./screenshots/modul_06/8B.png) |
 
 ---
 
-## 2. Peta Kemajuan Modul Praktikum
+## 3. Kendala yang Dihadapi dan Solusinya
 
-Aplikasi ini menggunakan **Sistem Kontrol Akses Modul Terpusat (Smart Gating)** di file `lib/main.dart` agar mahasiswa belajar selaras dengan ritme materi dosen di kelas:
+**Kendala 1: Kesalahan input dan gangguan server**
 
-| Modul | Topik & Arsitektur | Status Akses | Perintah Self-Test Lokal | Bobot CI |
-|:---:|---|:---:|---|:---:|
-| **#01** | Mobile Ecosystem, Toolchain & Profile App | `⚡ Aktif` | `flutter test test/modul_01_test.dart` | 20 Pts |
-| **#02** | Declarative UI, BoxConstraints & Responsive Dashboard | `🔒 Terkunci (W02)` | `flutter test test/modul_02_test.dart` | 20 Pts |
-| **#03** | Navigation (GoRouter), Riverpod & 4-State KRS App | `🔒 Terkunci (W03)` | `flutter test test/modul_03_test.dart` | 20 Pts |
-| **#04** | Networking, REST API Dio & Repository Pattern | `🔒 Terkunci (W04)` | `flutter test test/modul_04_test.dart` | 15 Pts |
-| **Dok** | Verifikasi Identitas Asli Mahasiswa di README | `Wajib` | `flutter test test/verify_documentation_test.dart` | 10 Pts |
-| **Lint** | Dart Code Formatting & Static Analysis | `Wajib` | `flutter analyze --no-fatal-infos` | 15 Pts |
-| **Total** | **Skor Maksimal Evaluasi Autograding** | — | `flutter test` | **100 Pts** |
+Solusi: Menambahkan validasi pada formulir login dan penanganan kesalahan agar pengguna mendapatkan informasi saat proses login gagal.
 
-> [!NOTE]
-> **Membuka Modul Terkunci saat di Laboratorium:**  
-> Jika Anda sedang berada di sesi perkuliahan laboratorium dan dosen mengumumkan pembukaan modul, klik kartu modul yang terkunci di aplikasi lalu masukkan **Token Akses Kelas** yang dibagikan oleh dosen (misal: `TRPL-M02`, `TRPL-M03`, `TRPL-M04`, atau master passcode `POLIWANGI2026`).
+**Kendala 2: Sesi In-Memory hilang setelah aplikasi dimulai ulang**
+
+Solusi: Mencoba SharedPreferences dan penyimpanan aman untuk mempelajari perbedaan penyimpanan sesi sementara dan persisten.
+
+**Kendala 3: Token sensitif terlihat di layar**
+
+Solusi: Mempelajari fitur sembunyikan dan tampilkan token jika didukung oleh implementasi aplikasi.
 
 ---
 
-## 3. Panduan Menjalankan & Menguji Kode
+## 4. Jawaban Pertanyaan Refleksi
 
-### A. Persiapan Lingkungan (Setup)
-```bash
-# 1. Unduh seluruh dependensi paket Flutter
-flutter pub get
+### 1. Apa pertanyaan baru yang muncul ketika sesi mulai disimpan secara persisten?
 
-# 2. Jalankan aplikasi pada emulator atau perangkat fisik Android/iOS/Web
-flutter run
-```
+Ketika sesi disimpan, kita perlu memastikan apakah pengguna masih bisa login setelah aplikasi ditutup dan dibuka kembali. Kita juga perlu memeriksa apakah sesi yang sudah kedaluwarsa masih bisa digunakan.
 
-### B. Pengujian Mandiri Sebelum Push (Self-Testing)
-Sebelum melakukan `git push` ke repositori tugas GitHub Anda, pastikan seluruh pengujian lulus di mesin lokal:
+### 2. Bagaimana tombol Back bisa menyebabkan kesimpulan yang salah tentang penyimpanan?
 
-```bash
-# 1. Periksa aturan kode linter Dart
-flutter analyze
+Tombol Back tidak selalu menutup aplikasi sepenuhnya. Jadi, kalau sesi masih ada setelah tombol Back ditekan, belum tentu sesi tersebut sudah tersimpan secara permanen.
 
-# 2. Jalankan unit & widget test modul yang sedang Anda kerjakan
-flutter test test/modul_01_test.dart
-flutter test test/modul_02_test.dart
+### 3. Apakah pesan “Email atau kata sandi salah” merugikan pengguna?
 
-# 3. Jalankan seluruh test suite sekaligus
-flutter test
-```
+Pesan ini memang tidak menjelaskan kesalahan secara detail. Namun, pesan tersebut lebih aman karena orang lain tidak bisa mengetahui apakah email yang dimasukkan sudah terdaftar atau belum.
+
+### 4. Apa masalahnya jika SharedPreferences digunakan untuk menyimpan sesi?
+
+SharedPreferences bisa digunakan untuk menyimpan data sederhana. Namun, untuk data penting seperti token login, Secure Storage lebih cocok karena memberikan perlindungan yang lebih baik.
+
+### 5. Apakah token masih layak disimpan di perangkat yang sudah di-root atau dipantau?
+
+Token masih bisa disimpan menggunakan Secure Storage karena lebih aman daripada penyimpanan biasa. Namun, jika perangkat sudah di-root atau dipantau, token tetap bisa berisiko diketahui orang lain. Karena itu, keamanan juga perlu diperhatikan dari sisi server.
 
 ---
 
-## 4. Konvensi Pesan Commit (Conventional Commits)
+## 5. Kesimpulan
 
-Mahasiswa **wajib** menggunakan format pesan commit terstruktur:
-- `feat(w01): complete profile screen and identity info card`
-- `feat(w02): implement layoutbuilder responsive grid for tablet`
-- `fix(w02): resolve renderflex overflow in course card`
-- `feat(w03): setup gorouter declarative routes and krs notifier`
-- `feat(w04): integrate dio remote datasource and repository pattern`
-- `docs(readme): update student identity and ai reflection table`
-
----
-
-## 5. Catatan Penggunaan AI (Responsible AI Disclosure)
-
-Sesuai prinsip **Responsible AI** di lingkungan akademik Politeknik Negeri Banyuwangi, mahasiswa diperbolehkan menggunakan AI coding assistant (GitHub Copilot, Gemini Code Assist, ChatGPT) sebagai akselerator belajar, dengan kewajiban mencatat penggunaannya secara transparan pada tabel berikut:
-
-| Modul / File Kode | Alat AI yang Digunakan | Tujuan Penggunaan | Validasi Teknis yang Dilakukan Mahasiswa |
-|---|---|---|---|
-| *Contoh: lib/modul_02/widgets/course_card.dart* | *GitHub Copilot* | *Saran styling Elevation & BoxDecoration* | *Memeriksa contrast ratio WCAG AA dan padding antarmuka* |
-| *Contoh: lib/modul_04/models/announcement.dart* | *Gemini Code Assist* | *Pengecekan null-safety pada fromJson* | *Menambahkan fallback default string kosong untuk mencegah error runtime* |
-
----
-
-*Hak Cipta © 2026 Jurusan Bisnis dan Informatika (JBI), Politeknik Negeri Banyuwangi.*
-
----
-
----
-
-# LAPORAN PRAKTIKUM MODUL 04
-
-## Future & REST API Dasar
-
-**Nama:** Elga Maulidia Akbari 
-**NIM:** 362558302130
-**Kelas:** TRPL 2E  
-**Program Studi:** Sarjana Terapan Teknologi Rekayasa Perangkat Lunak (TRPL)
-
----
-
-## 1. Hasil Praktikum
-
-Pada Modul 04 dibuat aplikasi **Portal Pengumuman TRPL** menggunakan Flutter. Aplikasi mengambil data pengumuman dari REST API dan menampilkannya dalam bentuk daftar.
-
-Aplikasi memiliki beberapa fitur, yaitu:
-
-- Mengambil data pengumuman dari REST API.
-- Menampilkan 10 data pengumuman.
-- Melakukan filter berdasarkan kategori.
-- Menampilkan detail pengumuman.
-- Menangani kondisi loading, error, data kosong, dan data berhasil.
-- Memuat ulang data menggunakan tombol refresh dan pull-to-refresh.
-
----
-
-## 2. SS Modul 04
-
-### A. Loading State
-
-Pada keadaan loading, aplikasi sedang melakukan proses pengambilan data dari REST API. Selama proses tersebut berlangsung, aplikasi menampilkan indikator loading dan pesan **"Memuat pengumuman dari server..."**.
-
-[![Loading State](./lib/modul_04/screenshots/Loading%20State.png)](./lib/modul_04/screenshots/Loading%20State.png)
-
-### B. Error State
-
-Pada keadaan error, aplikasi menampilkan **"Gagal Memuat Data"** ketika terjadi masalah saat mengambil data dari server. Aplikasi juga menyediakan tombol **"Coba Lagi"** untuk melakukan request kembali.
-
-[![Error State](./lib/modul_04/screenshots/Error%20State.png)](./lib/modul_04/screenshots/Error%20State.png)
-
-### C. Empty State
-
-Pada keadaan empty, aplikasi menampilkan kondisi ketika tidak terdapat pengumuman pada kategori yang dipilih. Aplikasi menampilkan ikon data kosong beserta keterangan kepada pengguna.
-
-[![Empty State](./lib/modul_04/screenshots/Empty%20State.png)](./lib/modul_04/screenshots/Empty%20State.png)
-
-### D. Success State
-
-Pada keadaan success, data berhasil diterima dari REST API dan ditampilkan dalam bentuk daftar. Pada pengujian ini aplikasi berhasil menampilkan **10 pengumuman**.
-
-[![Success State](./lib/modul_04/screenshots/Success%20State.png)](./lib/modul_04/screenshots/Success%20State.png)
-
-### E. Detail Pengumuman
-
-Pengguna dapat memilih salah satu pengumuman pada daftar untuk membuka halaman detail. Halaman detail menampilkan informasi dari pengumuman yang dipilih.
-
-[![Detail Pengumuman](./lib/modul_04/screenshots/Detail%20Pengumuman.png)](./lib/modul_04/screenshots/Detail%20Pengumuman.png)
-
----
-
-## 3. Pengujian
-
-Pengujian yang dilakukan pada Modul 04:
-
-- `flutter analyze` → **No issues found**
-- `flutter test test/modul_04_test.dart` → **All tests passed**
-
----
-
-## 4. Kesimpulan
-
-Praktikum Modul 04 berhasil dilakukan. Aplikasi dapat mengambil data dari REST API dan menampilkannya dalam bentuk daftar pengumuman. Aplikasi juga dapat melakukan filter kategori, menampilkan detail pengumuman, melakukan refresh data, serta menangani kondisi loading, error, empty, dan success.
+Dari praktikum Modul 06, saya belajar cara login dan mengelola sesi pengguna di aplikasi Flutter. Saya juga belajar bahwa setiap metode penyimpanan memiliki kelebihan dan kekurangan. Oleh karena itu, metode penyimpanan harus dipilih sesuai kebutuhan agar data pengguna tetap aman.
