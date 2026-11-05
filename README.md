@@ -110,3 +110,72 @@ Token masih bisa disimpan menggunakan Secure Storage karena lebih aman daripada 
 ## 5. Kesimpulan
 
 Dari praktikum Modul 06, saya belajar cara login dan mengelola sesi pengguna di aplikasi Flutter. Saya juga belajar bahwa setiap metode penyimpanan memiliki kelebihan dan kekurangan. Oleh karena itu, metode penyimpanan harus dipilih sesuai kebutuhan agar data pengguna tetap aman.
+
+
+
+
+
+
+# Praktikum-Testing Performa
+
+## Modul 11 – Optimasi Performa Flutter
+
+### Pendahuluan
+
+Pada praktikum Modul 11 ini saya belajar tentang cara mengoptimalkan performa aplikasi Flutter, terutama ketika menampilkan data dalam jumlah banyak.
+Pada latihan ini aplikasi menampilkan 1.000 data tugas. Saya juga mencoba fitur pencarian dan filter untuk melihat bagaimana aplikasi menampilkan tugas sesuai yang dicari.
+
+### 1. Menjalankan Aplikasi
+
+Pertama, saya mengatur aplikasi agar membuka halaman Modul 11. Setelah itu saya menjalankan aplikasi menggunakan perintah:
+
+flutter pub get
+flutter run
+
+Setelah berhasil dijalankan, aplikasi menampilkan daftar tugas, kolom pencarian, dan pilihan filter status.
+
+**Screenshot hasil menjalankan aplikasi (`flutter run`):**
+
+| ![search-hp](hasil.png) | 
+
+### 2. Mengenal Data dan Filter
+
+Pada langkah ini saya mempelajari file `lib/modul_11/modul_11_app.dart` untuk mengetahui bagaimana data tugas dibuat dan ditampilkan.
+
+Ada beberapa bagian yang saya pelajari:
+
+- `_semuaTugas` digunakan untuk menyimpan 1.000 data tugas.
+- `StatusTugas` digunakan untuk membedakan tugas yang masih aktif dan sudah selesai.
+- `_hasil` digunakan untuk menyaring tugas berdasarkan pencarian dan filter.
+- `_kueri` digunakan untuk menyimpan kata yang diketik pada kolom pencarian.
+
+Dari bagian ini saya memahami bahwa data awal tetap tersimpan, sedangkan daftar yang ditampilkan akan berubah sesuai pencarian atau filter yang dipilih.
+
+### 3. Mengenal ListView.builder
+
+Selanjutnya saya mempelajari `ListView.builder` yang digunakan untuk menampilkan daftar tugas.
+Dari kode tersebut saya memahami bahwa Flutter membuat widget daftar sesuai kebutuhan tampilan. Jadi, aplikasi tidak perlu membuat semua 1.000 kartu tugas sekaligus saat halaman pertama dibuka.
+Di dalamnya juga terdapat `itemCount` untuk menentukan jumlah item dan `itemBuilder` untuk membuat tampilan setiap tugas.
+
+### 4. Mencoba Pencarian dan Filter
+
+Saya mencoba mencari tugas dengan mengetik `tugas praktikum 0002`. Hasilnya, aplikasi menampilkan 1 tugas yang sesuai dengan pencarian.
+Setelah itu saya memilih filter **Selesai**. Hasilnya, aplikasi menampilkan 250 tugas yang sudah selesai dari total 1.000 tugas.
+Dari percobaan ini saya jadi lebih memahami cara kerja pencarian dan filter pada daftar tugas.
+
+### 5. Melakukan Pengujian
+
+Setelah mencoba aplikasi, saya menjalankan pengujian menggunakan perintah:
+flutter test test/modul_11_test.dart
+Hasilnya, ketiga pengujian berhasil dijalankan dan muncul tulisan `All tests passed!`.
+Pengujian ini memeriksa penggunaan `ListView.builder`, fitur pencarian, dan filter status tugas.
+
+Screenshot hasil pengujian di terminal 
+| ![search-hp](terminal1.png) | 
+| ![search-hp](terminal2.png) | 
+
+
+### Kesimpulan
+
+Dari praktikum ini saya jadi lebih memahami cara menampilkan banyak data menggunakan `ListView.builder` di Flutter.
+Saya juga belajar mencoba fitur pencarian dan filter pada daftar tugas. Saya memahami bahwa `ListView.builder` membantu membuat tampilan daftar lebih efisien karena widget dibuat sesuai kebutuhan tampilan, tetapi seluruh data tugas tetap tersimpan di aplikasi.
